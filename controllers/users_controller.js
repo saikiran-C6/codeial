@@ -1,12 +1,23 @@
 const User = require('../models/user');
 
 
-module.exports.profile = function(req, res){
-    
-    res.render('user_profile', {
-        title: "User Profile"
-    });
-}
+module.exports.profile = async function (req, res) {
+  try {
+    if (req.cookies.user_id) {
+      const user = await User.findById(req.cookies.user_id).exec();
+      if (user) {
+        return res.render('user_profile', {
+          title: "User Profile",
+          user: user
+        });
+      }
+    }
+    return res.redirect('/users/sign-in');
+  } catch (err) {   
+    console.error(err);
+    return res.redirect('/users/sign-in');
+  }
+};
 
 // render the sign up page
 module.exports.signUp = function(req, res){
@@ -38,8 +49,7 @@ module.exports.create = async function (req, res) {
         return res.redirect('back');
       }
     } catch (err) {
-      console.error('Error in signing up:', err);
-      // Handle the error, perhaps by sending an error response
+      console.error('Error in signing up:', err);      
       return res.status(500).send('Error in signing up');
     }
   };
