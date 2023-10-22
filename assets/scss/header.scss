@@ -1,0 +1,19 @@
+header{    
+    display: flex;
+    background-color: rgb(62, 191, 247);        
+
+    p{        
+        font-size: x-large;
+        width:90%;
+        padding-left: 10px;
+        font-weight: bolder;        
+    }
+
+    li{
+        list-style-type: none;              
+    }
+
+    a{
+        text-decoration: none;
+    }
+}

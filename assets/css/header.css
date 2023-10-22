@@ -1,0 +1,12 @@
+header {
+  display: flex;
+  background-color: #3ebff7; }
+  header p {
+    font-size: x-large;
+    width: 90%;
+    padding-left: 10px;
+    font-weight: bolder; }
+  header li {
+    list-style-type: none; }
+  header a {
+    text-decoration: none; }

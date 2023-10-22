@@ -19,11 +19,41 @@ const User = require('../models/user');
 //   }
 // };
 
-module.exports.profile = function(req, res){
-  return res.render('user_profile',{
-    title: 'User Profile'
-  })
-}
+module.exports.profile = async function(req, res) {
+  try {
+      // Retrieve the user's profile based on the id parameter from the request
+      const user = await User.findById(req.params.id).exec();
+      
+      // Render the 'user_profile' template with the user's profile data
+      res.render('user_profile', {
+          title: 'User Profile',
+          profile_user: user
+      });
+  } catch (err) {
+      console.error("Error:", err);
+  }
+};
+
+module.exports.update = async function (req, res) {
+  try {
+      const user = await User.findById(req.params.id).exec();
+
+      if (!user) {
+          return res.status(404).send('User not found');
+      }
+
+      if (user.id === req.user.id) {
+          // Update the user
+          await User.findByIdAndUpdate(req.params.id, req.body).exec();
+          return res.redirect('back');
+      } else {
+          return res.status(401).send('Unauthorized');
+      }
+  } catch (err) {
+      console.error("Error:", err);      
+  }
+};
+
 
 // render the sign up page
 module.exports.signUp = function(req, res){
