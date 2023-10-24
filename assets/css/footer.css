@@ -1,3 +1,14 @@
-footer {
-  background-color: #585858;
-  padding-left: 10px; }
+#layout-footer {
+  color: white;
+  background: grey;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: flex-start; }
+  #layout-footer a {
+    color: white;
+    text-decoration: none;
+    display: flex; }
+  #layout-footer .footer-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between; }

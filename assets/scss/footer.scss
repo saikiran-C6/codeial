@@ -1,4 +1,22 @@
-footer{
-    background-color: rgb(88, 88, 88);
-    padding-left: 10px;
+#layout-footer{
+    color: white;
+    
+    a{
+        color: white;
+        text-decoration: none;
+        display: flex;
+    }
+
+    background: grey;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: flex-start;
+
+    .footer-nav{
+        ul{
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 }
