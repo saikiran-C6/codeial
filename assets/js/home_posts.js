@@ -23,6 +23,7 @@
 
     // method to create post in DOM
     let newPostDom = function(post){
+        // CHANGE :: show the count of zero likes on this post
         return $(`<li id="post-${post._id}">
         <p>
             
@@ -33,12 +34,21 @@
             ${ post.content }
             <br>
             <small>
-                ${ post.user.name }
+            ${ post.user.name }
             </small>
+            <br>
+
+            <small>
+                <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
+                0 Likes
+                </a>
+            </small>
+
         </p> 
+        
         <div class="post-comments">
             
-                <form action="/comments/create" method="post">
+                <form id="post-${ post._id }-comments-form" action="/comments/create" method="post">
                     <input type="text" name="content" placeholder="Type here to add comment..." required>
                     <input type="hidden" name="post" value="${ post._id }">
                     <input type="submit" value="Add Comment">

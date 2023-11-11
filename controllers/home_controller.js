@@ -12,9 +12,12 @@ module.exports.home = async function (req, res) {
                 path: 'comments',
                 populate: {
                     path: 'user'
+                },
+                populate: {
+                    path: 'likes'
                 }
             })
-            .exec();
+            .populate('likes').exec();
 
         // Query all users using async/await
         const users = await User.find({}).exec();
