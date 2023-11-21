@@ -1,3 +1,4 @@
+const { authenticate } = require('passport');
 const passport = require('passport');
 
 const LocalStrategy = require('passport-local').Strategy;
@@ -6,25 +7,31 @@ const User = require('../models/user');
 
 // Authenticating using passport
 passport.use(new LocalStrategy(
-  {
-    usernameField: 'email',
-    passReqToCallback: true, // Add this line to pass 'req' to the callback
-  },
-  async (req, email, password, done) => {
-    try {
-      const user = await User.findOne({ email: email }).exec();
-
-      if (!user || user.password !== password) {
-        req.flash('error', 'Invalid Username/Password'); // Use req.flash to set flash messages
-        return done(null, false);
-      }
       
-      return done(null, user);
-    } catch (err) {
-      req.flash('error', err); // Use req.flash to set flash messages
-      return done(err);
+    {
+        usernameField: 'email',
+        passReqToCallback: true
+    },
+    function(req, email, password, done) {
+        
+      // find a user and establish the identity
+      User.findOne({email: email}, function(err, user) {
+          if(err)
+          {
+              req.flash('error', err);
+              return done(err);
+          }
+
+          if(!user || user.password != password)
+          {
+              req.flash('error', 'Invalid Username/Password');
+              return done(null, false);
+          }
+          
+          console.log(`${user.name} signed in!`);
+          return done(null, user);
+      });
     }
-  }
 ));
 
 
@@ -34,18 +41,14 @@ passport.serializeUser(function(user, done){
 });
 
 // deserializing the user from the key in the cookies
-passport.deserializeUser(async function(id, done) {
-    try {
-      const user = await User.findById(id).exec();
-      if (!user) {
-        console.log('User not found');
-        return done(null, false);
-      }
+passport.deserializeUser(function(id, done){
+
+  User.findById(id, function(err, user){
+
+      if(err) { console.log('Error in finding user --> Passport'); return done(err); }
+
       return done(null, user);
-    } catch (err) {
-      console.log('Error in finding user --> Passport');
-      return done(err);
-    }
+  });
 });
 
 // check if the user is authenticated
@@ -68,7 +71,6 @@ passport.setAuthenticatedUser = function(req, res, next) {
   }
   next(); // Call next() to pass control to the next middleware or route
 }
-
   
 
 module.exports = passport;

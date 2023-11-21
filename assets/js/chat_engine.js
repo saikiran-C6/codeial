@@ -16,7 +16,7 @@ class ChatEngine{
         let self = this;
 
         this.socket.on('connect', function(){
-            console.log('connection established using sockets...!');
+            // console.log('connection established using sockets...!');
 
 
             self.socket.emit('join_room', {
@@ -25,9 +25,8 @@ class ChatEngine{
             });
 
             self.socket.on('user_joined', function(data){
-                console.log('a user joined!', data);
-            })
-
+                // console.log('a user joined!', data);
+            });
 
         });
 
@@ -45,7 +44,7 @@ class ChatEngine{
         });
 
         self.socket.on('receive_message', function(data){
-            console.log('message received', data.message);
+            // console.log('message received', data.message);
 
 
             let newMessage = $('<li>');
@@ -59,7 +58,7 @@ class ChatEngine{
             newMessage.append($('<span>', {
                 'html': data.message
             }));
-
+            newMessage.append($('<br>'));
             newMessage.append($('<sub>', {
                 'html': data.user_email
             }));
@@ -67,6 +66,6 @@ class ChatEngine{
             newMessage.addClass(messageType);
 
             $('#chat-messages-list').append(newMessage);
-        })
+        });
     }
 }

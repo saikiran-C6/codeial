@@ -1,14 +1,17 @@
 #layout-footer {
   color: white;
   background: grey;
-  padding: 5px 10px;
+  position: fixed;
   display: flex;
-  justify-content: flex-start; }
+  justify-content: space-between;
+  align-items: center;
+  left: 0;
+  bottom: 0; }
   #layout-footer a {
     color: white;
     text-decoration: none;
-    display: flex; }
+    display: block; }
   #layout-footer .footer-nav ul {
-    list-style: none;
+    list-style: none;    
     display: flex;
-    justify-content: space-between; }
+    justify-content: space-around;}

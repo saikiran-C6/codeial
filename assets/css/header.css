@@ -1,6 +1,8 @@
 #layout-header nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  position: fixed;
   padding: 0 10px;
   background: #2196f3;
   color: white;
